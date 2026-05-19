@@ -1,0 +1,45 @@
+services:
+  victim-server:
+    image: ubuntu:22.04
+    container_name: victim-server
+    hostname: victim-server
+    privileged: true
+    command: sleep infinity
+    networks:
+      labnet:
+        ipv4_address: 172.30.0.10
+
+  attacker:
+    image: ubuntu:22.04
+    container_name: attacker
+    hostname: attacker
+    command: sleep infinity
+    networks:
+      labnet:
+        ipv4_address: 172.30.0.20
+
+  client:
+    image: ubuntu:22.04
+    container_name: client
+    hostname: client
+    command: sleep infinity
+    networks:
+      labnet:
+        ipv4_address: 172.30.0.30
+
+  router-firewall:
+    image: ubuntu:22.04
+    container_name: router-firewall
+    hostname: router-firewall
+    privileged: true
+    command: sleep infinity
+    networks:
+      labnet:
+        ipv4_address: 172.30.0.40
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
