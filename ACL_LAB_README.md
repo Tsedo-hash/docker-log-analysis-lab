@@ -60,11 +60,11 @@
 **Student PC буюу 192.168.10.20 хаягтай төхөөрөмж Internal Server буюу 192.168.40.10 рүү ping хийх боломжгүй байна.
 Гэхдээ Internal Server-ийн HTTP service рүү web browser ашиглан хандаж чаддаг байх ёстой.**
 
--ACL дугаар: 100
--ICMP traffic-ийг хориглоно.
--HTTP буюу TCP port 80 traffic-ийг зөвшөөрнө.
--Student PC → Internal Server ping амжилтгүй байх ёстой.
--Student PC → http://192.168.40.10 web хандалт амжилттай байх ёстой.
+- ACL дугаар: 100
+- ICMP traffic-ийг хориглоно.
+- HTTP буюу TCP port 80 traffic-ийг зөвшөөрнө.
+- Student PC → Internal Server ping амжилтгүй байх ёстой.
+- Student PC → http://192.168.40.10 web хандалт амжилттай байх ёстой.
 
 # Даалгавар 3: Named Extended ACL тохируулах 
 
