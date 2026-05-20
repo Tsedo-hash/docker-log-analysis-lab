@@ -1,80 +1,70 @@
-ACL тохируулах лабораторын ажил 
+from pathlib import Path
 
-Энэхүү лабораторийн ажлаар Standard ACL, Extended ACL болон Named Extended ACL тохируулна. ACL-ийг зөв interface дээр зөв чиглэлтэйгээр байрлуулж, үр дүнг баталгаажуулах чадварт суралцана. 
+content = """# ACL тохируулах лабораторийн ажил
 
-Scenario 
+## Лабораторийн ажлын зорилго
 
-Өгөгдсөн топологид буй төхөөрөмжүүдийн хаяглалтыг ба Router0 болон Router1 төхөөрөмжүүд дээр static routing тохируулсан. Хандалтыг зохицуулах зорилгоор даалгавруудад өгөгдсөн шаардлагын дагуу ACL тохируул.  
+Энэхүү лабораторийн ажлаар **Standard ACL**, **Extended ACL** болон **Named Extended ACL** тохируулна.  
+Оюутан ACL-ийг зөв interface дээр зөв чиглэлтэйгээр байрлуулж, тохиргооны үр дүнг `ping`, `web browser`, `show access-lists`, `show running-config` командуудаар баталгаажуулах чадварт суралцана.
 
-Топологи: 
+---
 
+## Scenario
 
+Өгөгдсөн топологид буй төхөөрөмжүүдийн IP хаяглалтыг хийсэн бөгөөд **Router0** болон **Router1** төхөөрөмжүүд дээр **static routing** тохируулсан гэж үзнэ.
 
-IP хаяглалт 
+Хандалтыг зохицуулах зорилгоор дараах даалгавруудад өгөгдсөн шаардлагын дагуу ACL тохируулна.
 
+---
 
-**Даалгавар 1: Standard ACL тохируулах **
+## Топологи
 
-Web Server-ээс Guest PC лүү хандалт хийхийг хоригло. 
+**Зураг 5.1. Даалгаврын топологи**
 
-ACL дугаар: 10 
+> Энэ хэсэгт Packet Tracer-ийн топологийн зургийг оруулна.
 
-Guest PC - Web Server ping амжилтгүй байх ёстой. 
+---
 
-Admin PC - Web Server ping амжилттай байх ёстой. 
+## IP хаяглалт
 
-Student PC - Web Server ping амжилттай байх ёстой. 
+**Хүснэгт 5.1. IP хаяглалт**
 
-Даалгавар 2: Extended ACL тохируулах 
+| Төхөөрөмж | IP address | Subnet mask | Gateway | Interface |
+|---|---:|---:|---:|---|
+| Admin PC | 192.168.10.10 | 255.255.255.0 | 192.168.10.1 | Fa0 |
+| Student PC | 192.168.10.20 | 255.255.255.0 | 192.168.10.1 | Fa0 |
+| Guest PC | 192.168.20.10 | 255.255.255.0 | 192.168.20.1 | Fa0 |
+| Web Server | 192.168.30.10 | 255.255.255.0 | 192.168.30.1 | Fa0 |
+| Internal Server | 192.168.40.10 | 255.255.255.0 | 192.168.40.1 | Fa0 |
+| Router0 | 192.168.30.1 | 255.255.255.0 | - | G0/0 |
+| Router0 | 192.168.10.1 | 255.255.255.0 | - | G0/1 |
+| Router0 | 10.0.0.1 | 255.255.255.252 | - | G0/2 |
+| Router1 | 192.168.40.1 | 255.255.255.0 | - | G0/0 |
+| Router1 | 192.168.20.1 | 255.255.255.0 | - | G0/1 |
+| Router1 | 10.0.0.2 | 255.255.255.252 | - | G0/2 |
 
-Student PC буюу 192.168.10.20 хаягтай төхөөрөмж Internal Server буюу 192.168.40.10 рүү ping хийх боломжгүй байна. Гэхдээ Internal Server-ийн HTTP service рүү web browser ашиглан хандаж чаддаг байх. 
+---
 
-ACL дугаар: 100 
+# Даалгавар 1: Standard ACL тохируулах
 
-ICMP traffic-ийг хориглоно. 
+## Шаардлага
 
-HTTP буюу TCP port 80 traffic-ийг зөвшөөрнө. 
+**Web Server-ээс Guest PC лүү хандалт хийхийг хориглоно.**
 
-Student PC - Internal Server ping амжилтгүй байх ёстой. 
+- ACL дугаар: `10`
+- Guest PC → Web Server ping амжилтгүй байх ёстой.
+- Admin PC → Web Server ping амжилттай байх ёстой.
+- Student PC → Web Server ping амжилттай байх ёстой.
 
-Student PC - http://192.168.40.10  вебийн хандалт амжилттай байх ёстой. 
+## Тайлбар
 
-Даалгавар 3: Named Extended ACL тохируулах 
+Standard ACL нь зөвхөн **source IP address**-ийг шалгадаг.  
+Иймээс Standard ACL-ийг destination буюу очих сүлжээнд ойр байрлуулах нь тохиромжтой.
 
-Server талаас хэрэглэгчийн сүлжээ рүү шууд хандах traffic-ийг хоригло. Хэрэглэгчийн талаас server тал руу хандах traffic зөвшөөрөгдсөн хэвээр байна. 
+## Жишээ тохиргоо
 
-Router0 дээр BLOCK_WEB_TO_USERS нэртэй Named Extended ACL үүсгэнэ. 
-
-Web Server network буюу 192.168.30.0/24 сүлжээнээс Admin PC буюу 192.168.10.20 төхөөрөмж рүү хандахыг хориглоно. 
-
-Router1 дээр BLOCK_ADMIN&USER нэртэй Named Extended ACL үүсгэнэ. 
-
-Admin болон Student PC буюу 192.168.10.10, 192.168.10.20 хаягаас Guest PC буюу 192.168.20.10 хаяг руу хандахыг хориглоно. 
-
-Бусад traffic зөвшөөрөгдөнө. 
-
-Шалгах командууд 
-
-show access-lists 
-
-show running-config 
-
-ping 
-
-web browser 
-
-Бататгах асуулт 
-
-Standard ACL юуг шалгадаг вэ? 
-
-Extended ACL нь Standard ACL-ээс юугаараа ялгаатай вэ? 
-
-Named ACL-ийн давуу тал юу вэ? 
-
-Standard ACL-ийг яагаад destination-д ойр байрлуулдаг вэ? 
-
-Extended ACL-ийг яагаад source-д ойр байрлуулдаг вэ? 
-
-ACL-ийн implicit deny гэж юу вэ? 
-
-ACL-ийг Interface дээр in болон out чиглэлд тавихын ялгаа юу вэ? 
+```bash
+Router0(config)# access-list 10 deny 192.168.20.10 0.0.0.0
+Router0(config)# access-list 10 permit any
+Router0(config)# interface g0/0
+Router0(config-if)# ip access-group 10 out
