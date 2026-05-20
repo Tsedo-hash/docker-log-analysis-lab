@@ -1,0 +1,42 @@
+Snort IDS ашиглан reconnaissance болон suspicious access илрүүлэх 
+
+Зорилго 
+
+Intrusion Detection System (IDS)-ийн ажиллагаатай танилцах, reconnaissance attack болон suspicious access илрүүлэх, custom Snort rule боловсруулах. 
+
+Ашиглах хэрэгсэл 
+
+Snort IDS  
+Nmap  
+Fail2Ban 
+Wireshark  
+Virtual Machine 
+
+Гүйцэтгэх даалгавар 
+
+1. Virtual network орчин байгуулж attacker болон target system тохируул.  
+
+2.Target system дээр Snort IDS суулгаж тохируулан rule, alert mode болон interface monitoring ажиллагааг судал.  
+
+3.Snort custom rule боловсруулж suspicious traffic detection хийх. 
+Rule боловсруулахдаа:  
+
+msg  
+
+content  
+
+flow  
+
+classtype  
+
+sid/rev  
+
+pcre option-уудаас ашиглана. 
+
+4.Attacker machine-с reconnaissance activity хийж туршина. (SYN Scan, Service Detection, XMAS Scan, UDP Scan) 
+
+5.Target system рүү suspicious access attempt simulation хийх. (Жишээ: SSH access, Remote connection attempt) 
+
+6.Fail2Ban ашиглан Snort alert дээр үндэслэн suspicious IP address автоматаар block хийх IPS ажиллагаа хэрэгжүүл. 
+
+7.Snort alert болон network traffic-д дүн шинжилгээ хийх
