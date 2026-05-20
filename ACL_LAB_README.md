@@ -1,6 +1,4 @@
-from pathlib import Path
-
-content = """# ACL тохируулах лабораторийн ажил
+## ACL тохируулах лабораторийн ажил
 
 ## Лабораторийн ажлын зорилго
 
@@ -56,15 +54,24 @@ content = """# ACL тохируулах лабораторийн ажил
 - Admin PC → Web Server ping амжилттай байх ёстой.
 - Student PC → Web Server ping амжилттай байх ёстой.
 
-## Тайлбар
+# Даалгавар 2: Extended ACL тохируулах
+## Шаардлага
 
-Standard ACL нь зөвхөн **source IP address**-ийг шалгадаг.  
-Иймээс Standard ACL-ийг destination буюу очих сүлжээнд ойр байрлуулах нь тохиромжтой.
+**Student PC буюу 192.168.10.20 хаягтай төхөөрөмж Internal Server буюу 192.168.40.10 рүү ping хийх боломжгүй байна.
+Гэхдээ Internal Server-ийн HTTP service рүү web browser ашиглан хандаж чаддаг байх ёстой.**
 
-## Жишээ тохиргоо
+-ACL дугаар: 100
+-ICMP traffic-ийг хориглоно.
+-HTTP буюу TCP port 80 traffic-ийг зөвшөөрнө.
+-Student PC → Internal Server ping амжилтгүй байх ёстой.
+-Student PC → http://192.168.40.10 web хандалт амжилттай байх ёстой.
 
-```bash
-Router0(config)# access-list 10 deny 192.168.20.10 0.0.0.0
-Router0(config)# access-list 10 permit any
-Router0(config)# interface g0/0
-Router0(config-if)# ip access-group 10 out
+# Даалгавар 3: Named Extended ACL тохируулах 
+
+## Server талаас хэрэглэгчийн сүлжээ рүү шууд хандах traffic-ийг хоригло. Хэрэглэгчийн талаас server тал руу хандах traffic зөвшөөрөгдсөн хэвээр байна. 
+- Router0 дээр BLOCK_WEB_TO_USERS нэртэй Named Extended ACL үүсгэнэ.
+- Web Server network буюу 192.168.30.0/24 сүлжээнээс Admin PC буюу 192.168.10.20 төхөөрөмж рүү хандахыг хориглоно. 
+
+- Router1 дээр BLOCK_ADMIN&USER нэртэй Named Extended ACL үүсгэнэ. 
+- Admin болон Student PC буюу 192.168.10.10, 192.168.10.20 хаягаас Guest PC буюу 192.168.20.10 хаяг руу хандахыг хориглоно.
+- Бусад traffic зөвшөөрөгдөнө. 
