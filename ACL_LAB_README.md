@@ -67,11 +67,28 @@
 - Student PC → http://192.168.40.10 web хандалт амжилттай байх ёстой.
 
 # Даалгавар 3: Named Extended ACL тохируулах 
-
-## Server талаас хэрэглэгчийн сүлжээ рүү шууд хандах traffic-ийг хоригло. Хэрэглэгчийн талаас server тал руу хандах traffic зөвшөөрөгдсөн хэвээр байна. 
+## Шаардлага
+**Server талаас хэрэглэгчийн сүлжээ рүү шууд хандах traffic-ийг хоригло. Хэрэглэгчийн талаас server тал руу хандах traffic зөвшөөрөгдсөн хэвээр байна.**
 - Router0 дээр BLOCK_WEB_TO_USERS нэртэй Named Extended ACL үүсгэнэ.
 - Web Server network буюу 192.168.30.0/24 сүлжээнээс Admin PC буюу 192.168.10.20 төхөөрөмж рүү хандахыг хориглоно. 
 
 - Router1 дээр BLOCK_ADMIN&USER нэртэй Named Extended ACL үүсгэнэ. 
 - Admin болон Student PC буюу 192.168.10.10, 192.168.10.20 хаягаас Guest PC буюу 192.168.20.10 хаяг руу хандахыг хориглоно.
-- Бусад traffic зөвшөөрөгдөнө. 
+- Бусад traffic зөвшөөрөгдөнө.
+
+# Шалгах командууд 
+
+- show access-lists
+- show running-config
+- ping
+- web browser 
+
+# Бататгах асуулт 
+
+1. Standard ACL юуг шалгадаг вэ?
+2. Extended ACL нь Standard ACL-ээс юугаараа ялгаатай вэ?
+3. Named ACL-ийн давуу тал юу вэ?
+4. Standard ACL-ийг яагаад destination-д ойр байрлуулдаг вэ?
+5. Extended ACL-ийг яагаад source-д ойр байрлуулдаг вэ?
+6. ACL-ийн implicit deny гэж юу вэ?
+7. ACL-ийг Interface дээр in болон out чиглэлд тавихын ялгаа юу вэ? 
